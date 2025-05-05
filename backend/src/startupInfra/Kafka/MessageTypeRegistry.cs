@@ -1,15 +1,17 @@
-namespace Averbacao.startupInfra.Kafka;
+using AverbacaoService.Domain.Averbacoes.Features.Criar.Application;
+
+namespace AverbacaoService.startupInfra.Kafka;
 
 public static class MessageTypeRegistry
 {
     private static readonly Dictionary<string, Type> MessageTypes = new()
     {
-        { "PropostaAverbacaoOrquestradorMessage", typeof(AverbacaoMessage) }
+        { nameof(PropostaAverbacaoMessage), typeof(PropostaAverbacaoMessage) }
     };
 
     private static readonly Dictionary<string, Type> ConsumerTypes = new()
     {
-        { "RecepcionarItencaoAverbacaoEventConsumer", typeof(RecepcionarItencaoAverbacaoEventConsumer) }
+        { nameof(CriarAverbacaoConsumer), typeof(CriarAverbacaoConsumer) }
     };
 
     public static Type GetMessageType(string messageTypeName)

@@ -1,7 +1,7 @@
 using Confluent.Kafka;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
-namespace Averbacao.startupInfra.Kafka;
+namespace AverbacaoService.startupInfra.Kafka;
 
 public class KafkaHealthCheck : IHealthCheck
 {

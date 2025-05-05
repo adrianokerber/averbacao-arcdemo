@@ -1,9 +1,9 @@
-﻿using System.Threading.Channels;
-using System.Reflection;
-using Averbacao.startupInfra.Kafka;
+﻿using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using System.Reflection;
+using AverbacaoService.startupInfra.Extensions;
+using AverbacaoService.startupInfra.Kafka;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
 var serviceVersion = Environment.GetEnvironmentVariable("DD_VERSION") ??

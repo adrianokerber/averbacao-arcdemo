@@ -1,4 +1,4 @@
-namespace Averbacao.startupInfra.Kafka;
+namespace AverbacaoService.startupInfra.Kafka;
 
 public record KafkaConfig
 {

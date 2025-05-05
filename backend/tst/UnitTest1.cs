@@ -1,4 +1,4 @@
-namespace Averbacao.Tests;
+namespace AverbacaoService.Tests;
 
 public class UnitTest1
 {

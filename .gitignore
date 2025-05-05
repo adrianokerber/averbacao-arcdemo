@@ -55,3 +55,6 @@ nunit-*.xml
 
 # Jetbrains IDEs
 .idea/
+
+# User files
+**.user

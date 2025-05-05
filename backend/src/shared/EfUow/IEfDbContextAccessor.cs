@@ -1,4 +1,4 @@
-﻿namespace Averbacao.modules.Inss.Infraestructure.UoW
+﻿namespace AverbacaoService.shared.EfUow
 {
     public interface IEfDbContextAccessor<T> : IDisposable where T : Microsoft.EntityFrameworkCore.DbContext
     {

@@ -1,4 +1,4 @@
-﻿namespace Averbacao.shared;
+﻿namespace AverbacaoService.shared;
 
 /// <summary>
 /// Interface for any service that requires DI.

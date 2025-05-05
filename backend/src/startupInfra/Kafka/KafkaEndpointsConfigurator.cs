@@ -2,7 +2,7 @@ using Confluent.Kafka;
 using Silverback.Messaging.Configuration;
 using Silverback.Messaging.Serialization;
 
-namespace Averbacao.startupInfra.Kafka;
+namespace AverbacaoService.startupInfra.Kafka;
 
 public class KafkaEndpointsConfigurator : IEndpointsConfigurator
 {

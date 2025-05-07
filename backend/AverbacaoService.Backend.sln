@@ -1,13 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AverbacaoService", "src\AverbacaoService.csproj", "{FF24ACCB-6142-4350-A42B-0AC5550AA471}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AverbacaoService", "AverbacaoService\src\AverbacaoService.csproj", "{FF24ACCB-6142-4350-A42B-0AC5550AA471}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{27448887-D0F2-419A-BC7A-AF5727FF1C93}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker-compose", "docker-compose", "{27448887-D0F2-419A-BC7A-AF5727FF1C93}"
 	ProjectSection(SolutionItems) = preProject
-		compose.yaml = compose.yaml
+		docker-compose.yaml = docker-compose.yaml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AverbacaoService.Tests", "tst\AverbacaoService.Tests.csproj", "{3FE57DF5-8A34-4DE7-966E-4A875D22458B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AverbacaoService.Tests", "AverbacaoService\tst\AverbacaoService.Tests.csproj", "{3FE57DF5-8A34-4DE7-966E-4A875D22458B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AverbacaoWorkflowService", "AverbacaoWorkflowService\src\AverbacaoWorkflowService.csproj", "{480018B0-E036-4E3E-A90E-E3297C6660D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AverbacaoService", "AverbacaoService", "{35D31B4E-AD5D-4A56-838D-DB77F5AABA88}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AverbacaoWorkflow", "AverbacaoWorkflow", "{8B1BA917-32FF-46EB-B706-78B11BB9125C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AverbacaoWorkflowService.Tests", "AverbacaoWorkflowService\tst\AverbacaoWorkflowService.Tests.csproj", "{B807BEC6-EF55-4298-BA0F-9C03544D8235}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,5 +31,19 @@ Global
 		{3FE57DF5-8A34-4DE7-966E-4A875D22458B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FE57DF5-8A34-4DE7-966E-4A875D22458B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FE57DF5-8A34-4DE7-966E-4A875D22458B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{480018B0-E036-4E3E-A90E-E3297C6660D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{480018B0-E036-4E3E-A90E-E3297C6660D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{480018B0-E036-4E3E-A90E-E3297C6660D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{480018B0-E036-4E3E-A90E-E3297C6660D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B807BEC6-EF55-4298-BA0F-9C03544D8235}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B807BEC6-EF55-4298-BA0F-9C03544D8235}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B807BEC6-EF55-4298-BA0F-9C03544D8235}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B807BEC6-EF55-4298-BA0F-9C03544D8235}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FF24ACCB-6142-4350-A42B-0AC5550AA471} = {35D31B4E-AD5D-4A56-838D-DB77F5AABA88}
+		{3FE57DF5-8A34-4DE7-966E-4A875D22458B} = {35D31B4E-AD5D-4A56-838D-DB77F5AABA88}
+		{480018B0-E036-4E3E-A90E-E3297C6660D1} = {8B1BA917-32FF-46EB-B706-78B11BB9125C}
+		{B807BEC6-EF55-4298-BA0F-9C03544D8235} = {8B1BA917-32FF-46EB-B706-78B11BB9125C}
 	EndGlobalSection
 EndGlobal

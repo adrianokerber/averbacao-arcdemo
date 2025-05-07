@@ -1,7 +1,0 @@
-﻿services:
-  averbacao:
-    image: averbacao
-    build:
-      context: .
-      dockerfile: src/Dockerfile
-

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AverbacaoService.shared.DatabaseDetails
 {
+    [Obsolete]
     public sealed class AverbacaoDbContextFactory(IConfiguration configuration) : IEfDbContextFactory<AverbacaoDbContext>
     {
         public async Task<AverbacaoDbContext> CriarAsync()

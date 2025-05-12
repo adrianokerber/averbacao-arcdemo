@@ -2,6 +2,7 @@
 
 namespace AverbacaoService.shared.DatabaseDetails
 {
+    [Obsolete]
     public class EfUnitOfWork(IEfDbContextAccessor<AverbacaoDbContext> efDbContextAccessor) : IUnitOfWork
     {
         public async Task Commit(CancellationToken cancellationToken)

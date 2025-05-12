@@ -9,10 +9,13 @@ Dividido em dois projetos:
 
 ```bash
 docker compose up -d
+# Or if running from root folder
+docker compose -f backend/docker-compose.yaml up -d
 # If you want to rebuild images
 docker compose up -d --build
 # If you want to run averbacao-db separately
 docker compose up -d --no-deps averbacao-service-database
+docker compose -f backend/docker-compose.yaml up -d --no-deps averbacao-service-database
 ```
 
 ## Tasks

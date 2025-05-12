@@ -1,3 +1,20 @@
 namespace AverbacaoService.shared.ValueObjects;
 
-public record Proposta(int Codigo, Proponente Proponente, decimal Valor, Prazo Prazo);
+public class Proposta
+{
+    // Protected constructor for EF Core
+    protected Proposta() { }
+
+    public Proposta(int codigo, Proponente proponente, decimal valor, Prazo prazo)
+    {
+        Codigo = codigo;
+        Proponente = proponente;
+        Valor = valor;
+        Prazo = prazo;
+    }
+
+    public int Codigo { get; private set; }
+    public Proponente Proponente { get; private set; }
+    public decimal Valor { get; private set; }
+    public Prazo Prazo { get; private set; }
+}

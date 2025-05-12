@@ -6,6 +6,9 @@ public record Cpf
 {
     public string Valor { get; private set; }
 
+    // Protected constructor for EF Core
+    private Cpf(){}
+
     private Cpf(string valor)
     {
         Valor = valor;

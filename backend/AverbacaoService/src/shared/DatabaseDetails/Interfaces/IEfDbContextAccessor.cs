@@ -1,5 +1,6 @@
 ﻿namespace AverbacaoService.shared.DatabaseDetails.Interfaces
 {
+    [Obsolete]
     public interface IEfDbContextAccessor<T> : IDisposable where T : Microsoft.EntityFrameworkCore.DbContext
     {
         void Register(T context);

@@ -2,6 +2,7 @@
 
 namespace AverbacaoService.shared.DatabaseDetails
 {
+    [Obsolete]
     public sealed class AverbacaoDbContextAccessor: IEfDbContextAccessor<AverbacaoDbContext>
     {
         private AverbacaoDbContext _contexto = null!;

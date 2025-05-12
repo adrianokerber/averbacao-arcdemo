@@ -6,27 +6,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AverbacaoService.Domain.Averbacoes;
 
-public class AverbacoesRepository(IEfDbContextAccessor<AverbacaoDbContext> dbContextAccessor, ILogger<AverbacoesRepository> logger) : IService<AverbacoesRepository>
+public class AverbacoesRepository(AverbacaoDbContext dbContext, ILogger<AverbacoesRepository> logger) : IService<AverbacoesRepository>
 {
     public async Task SalvarAlteracoes(Averbacao averbacao, CancellationToken cancellationToken)
     {
-        await dbContextAccessor.Get()
-                               .SaveChangesAsync();
+        await dbContext.SaveChangesAsync();
     }
 
     public async Task<Maybe<Averbacao>> ObterPorProposta(int propostaCodigo)
     {
-        return await dbContextAccessor.Get()
-                                         .Averbacoes
-                                         .FirstOrDefaultAsync(a => a.Proposta.Codigo == propostaCodigo);
+        return await dbContext
+            .Averbacoes
+            .FirstOrDefaultAsync(a => a.Proposta.Codigo == propostaCodigo);
     }
 
     public async Task<Guid> Incluir(Averbacao averbacao, CancellationToken cancellationToken)
     {
-        dbContextAccessor.Get()
-                         .Add(averbacao);
+        dbContext.Add(averbacao);
         
-        var changesSaved = dbContextAccessor.Get().SaveChanges() > 0;
+        var changesSaved = dbContext.SaveChanges() > 0;
         if (changesSaved)
             return averbacao.Id;
 

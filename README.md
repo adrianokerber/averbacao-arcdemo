@@ -18,8 +18,18 @@ docker compose up -d --no-deps averbacao-service-database
 docker compose -f backend/docker-compose.yaml up -d --no-deps averbacao-service-database
 ```
 
+## Migrations
+
+```bash
+# Create initial migration
+dotnet ef migrations add InitialCreate --output-dir Infrastructure/Migrations
+
+# Run the migrations on DB
+dotnet ef database update
+```
+
 ## Tasks
 
-- Corrigir DI de CommandHandler
+- Adicionar migration para prepara o DB pois agora já conecta
 - Garantir que Averbacao está funcional e gravando no banco de dados
 - Adicionar Workflow.Core no AverbacaoWorkflowService

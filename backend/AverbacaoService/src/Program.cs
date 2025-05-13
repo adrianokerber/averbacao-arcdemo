@@ -1,6 +1,7 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using AverbacaoService.Infrastructure;
 using AverbacaoService.startupInfra;
 using CSharpFunctionalExtensions;
 using FastEndpoints;
@@ -46,6 +47,9 @@ try
         // Add web UIs to interact with the document
         // Available at: http://localhost:<port>/swagger
         app.UseSwaggerUi(); // UseSwaggerUI Protected by if (env.IsDevelopment())
+
+        // Initialize the database with seed data
+        await SeedData.Initialize(app.Services);
     }
 
     app.Run();

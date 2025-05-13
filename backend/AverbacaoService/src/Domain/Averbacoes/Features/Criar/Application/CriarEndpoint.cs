@@ -35,8 +35,13 @@ public class CriarEndpoint(ILogger<CriarEndpoint> logger, CriarCommandHandler ha
         }
 
         var averbacao = await handler.HandleAsync(command.Value);
-        logger.LogInformation($"Averbacao criada com sucesso: {averbacao}");
-
+        if (averbacao.IsFailure)
+        {
+            await SendResultAsync(httpResponseFactory.CreateError400("Invalid message. Cannot process.", averbacao.Error));
+            return;
+        }
+        
+        logger.LogInformation($"Averbacao criada com sucesso: {averbacao.Value}");
         await SendResultAsync(httpResponseFactory.CreateSuccess200($"Averbacao criada com sucesso: {averbacao}"));
     }
 }

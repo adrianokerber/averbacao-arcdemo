@@ -2,7 +2,7 @@ using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AverbacaoService.Infrastructure;
-using AverbacaoService.startupInfra;
+using AverbacaoService.StartupInfra;
 using CSharpFunctionalExtensions;
 using FastEndpoints;
 using Serilog;

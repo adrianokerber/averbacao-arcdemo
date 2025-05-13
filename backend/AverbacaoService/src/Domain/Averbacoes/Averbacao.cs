@@ -5,12 +5,12 @@ using CSharpFunctionalExtensions;
 namespace AverbacaoService.Domain.Averbacoes;
 
 public class Averbacao {
+    // Constructor created only for EF Core
+    private Averbacao(){}
+    
     public Guid Id { get; private set; }
     public Status Status { get; private set; }
     public Proposta Proposta { get; private set; }
-
-    // Protected constructor for EF Core
-    protected Averbacao() { }
 
     private Averbacao(Guid id, Status status, Proposta proposta)
     {

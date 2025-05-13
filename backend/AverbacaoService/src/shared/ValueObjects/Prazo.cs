@@ -2,7 +2,7 @@ namespace AverbacaoService.shared.ValueObjects;
 
 public record Prazo
 {
-    // Protected constructor for EF Core
+    // Constructor created only for EF Core
     private Prazo(){}
     public Prazo(int meses)
     {

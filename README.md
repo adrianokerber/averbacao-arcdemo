@@ -30,6 +30,5 @@ dotnet ef database update
 
 ## Tasks
 
-- Adicionar migration para prepara o DB pois agora já conecta
-- Garantir que Averbacao está funcional e gravando no banco de dados
+- Corrigir testes unitários
 - Adicionar Workflow.Core no AverbacaoWorkflowService

@@ -15,7 +15,7 @@ public class CriarCommandHandler(AverbacoesRepository averbacoesRepository) : IS
         if (averbacaoNova.IsFailure)
             return Result.Failure<Averbacao>("Averbação inválida");
 
-        await averbacoesRepository.Incluir(averbacaoNova.Value, ct);
+        await averbacoesRepository.IncluirAsync(averbacaoNova.Value, ct);
         return averbacaoNova.Value;
     }
 }

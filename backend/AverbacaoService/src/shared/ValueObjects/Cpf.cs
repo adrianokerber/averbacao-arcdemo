@@ -4,10 +4,10 @@ namespace AverbacaoService.shared.ValueObjects;
 
 public record Cpf
 {
-    public string Valor { get; private set; }
-
-    // Protected constructor for EF Core
+    // Constructor created only for EF Core
     private Cpf(){}
+    
+    public string Valor { get; private set; }
 
     private Cpf(string valor)
     {

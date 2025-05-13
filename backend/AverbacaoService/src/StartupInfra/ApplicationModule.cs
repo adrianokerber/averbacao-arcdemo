@@ -5,7 +5,7 @@ using AverbacaoService.shared.DatabaseDetails.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace AverbacaoService.startupInfra;
+namespace AverbacaoService.StartupInfra;
 
 public class ApplicationModule : Autofac.Module
 {

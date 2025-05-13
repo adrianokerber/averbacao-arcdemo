@@ -5,7 +5,7 @@ using Serilog;
 using Serilog.Exceptions;
 using Serilog.Filters;
 
-namespace AverbacaoService.startupInfra;
+namespace AverbacaoService.StartupInfra;
 
 internal static class ServicesExtensions
 {

@@ -2,8 +2,8 @@ namespace AverbacaoService.shared.ValueObjects;
 
 public class Proposta
 {
-    // Protected constructor for EF Core
-    protected Proposta() { }
+    // Constructor created only for EF Core
+    private Proposta(){}
 
     public Proposta(int codigo, Proponente proponente, decimal valor, Prazo prazo)
     {

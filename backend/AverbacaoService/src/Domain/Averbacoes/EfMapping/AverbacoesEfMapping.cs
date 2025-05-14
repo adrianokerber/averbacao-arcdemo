@@ -16,7 +16,7 @@ public class AverbacoesEfMapping : IEntityTypeConfiguration<Averbacao>
             .HasColumnName("Status")
             .HasConversion(
                 v => v.Label,
-                v => v == "RECEBIDA" ? Status.Recebida : Status.Recusada
+                v => ConvertToStatus(v)
             );
         
         builder.OwnsOne(x => x.Proposta, proposta =>
@@ -59,5 +59,16 @@ public class AverbacoesEfMapping : IEntityTypeConfiguration<Averbacao>
                     .HasColumnType("INT");
             });
         });
+    }
+
+    private static Status ConvertToStatus(string value)
+    {
+        return value switch
+        {
+            "CRIADA" => Status.Criada,
+            "CANCELADA" => Status.Cancelada,
+            "PROCESSADA" => Status.Processada,
+            _ => throw new ArgumentException($"Unknown status value: {value}")
+        };
     }
 }

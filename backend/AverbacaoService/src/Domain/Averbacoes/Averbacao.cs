@@ -35,7 +35,7 @@ public class Averbacao {
             return Result.Failure<Averbacao>("Prazo da proposta inválido");
 
         var id = Guid.NewGuid();
-        var status = Status.Recebida;
+        var status = Status.Criada;
         
         return new Averbacao(id, status, proposta);
     }
@@ -50,9 +50,12 @@ public record Status
         Label = label.ToUpper();
     }
     
-    public static Status Recebida
-        => new Status("Recebida");
+    public static Status Criada
+        => new Status("CRIADA");
     
-    public static Status Recusada
-        => new Status("Recusada");
+    public static Status Processada
+        => new Status("PROCESSADA");
+    
+    public static Status Cancelada
+        => new Status("CANCELADA");
 }

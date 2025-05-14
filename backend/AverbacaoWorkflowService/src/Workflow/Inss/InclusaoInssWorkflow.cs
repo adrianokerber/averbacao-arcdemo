@@ -4,6 +4,6 @@ public class InclusaoInssWorkflow
 {
     // Consumer: Chama Incluir/IncluirAverbacao
     // Trigger no Workflow
-    //  - Chama Averbar
+    //  - Chama Formalizar
     //  - Chama IntegradorLegado
 }

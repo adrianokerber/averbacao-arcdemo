@@ -1,5 +1,5 @@
 ﻿using AverbacaoService.Domain.Averbacoes;
-using AverbacaoService.Domain.Averbacoes.EfMapping;
+using AverbacaoService.Domain.Averbacoes.Infraestructure.EfMapping;
 using Microsoft.EntityFrameworkCore;
 
 namespace AverbacaoService.shared.DatabaseDetails;

@@ -2,7 +2,7 @@ using AverbacaoService.shared.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AverbacaoService.Domain.Averbacoes.EfMapping;
+namespace AverbacaoService.Domain.Averbacoes.Infraestructure.EfMapping;
 
 public class AverbacoesEfMapping : IEntityTypeConfiguration<Averbacao>
 {
@@ -18,6 +18,24 @@ public class AverbacoesEfMapping : IEntityTypeConfiguration<Averbacao>
                 v => v.Label,
                 v => ConvertToStatus(v)
             );
+        
+        builder.OwnsOne(x => x.Formalizacao, formalizacao =>
+        {
+            formalizacao.Property(x => x.CodigoIntegracao)
+                .IsRequired()
+                .HasColumnName("FormalizacaoCodigoIntegracao")
+                .HasColumnType("INT");
+
+            formalizacao.Property(x => x.Data)
+                .IsRequired()
+                .HasColumnName("FormalizacaoData")
+                .HasColumnType("DATETIME");
+
+            formalizacao.Property(x => x.Detalhes)
+                .IsRequired()
+                .HasColumnName("FormalizacaoDetalhes")
+                .HasColumnType("VARCHAR(500)");
+        });
         
         builder.OwnsOne(x => x.Proposta, proposta =>
         {
@@ -66,8 +84,8 @@ public class AverbacoesEfMapping : IEntityTypeConfiguration<Averbacao>
         return value switch
         {
             "CRIADA" => Status.Criada,
+            "FORMALIZADA" => Status.Formalizada,
             "CANCELADA" => Status.Cancelada,
-            "PROCESSADA" => Status.Processada,
             _ => throw new ArgumentException($"Unknown status value: {value}")
         };
     }

@@ -11,6 +11,7 @@ public class Averbacao {
     public Guid Id { get; private set; }
     public Status Status { get; private set; }
     public Proposta Proposta { get; private set; }
+    public Formalizacao? Formalizacao { get; private set; }
 
     private Averbacao(Guid id, Status status, Proposta proposta)
     {
@@ -39,7 +40,24 @@ public class Averbacao {
         
         return new Averbacao(id, status, proposta);
     }
+
+    public Result Formalizar(Formalizacao formalizacao)
+    {
+        if (formalizacao == null || formalizacao.CodigoIntegracao <= 0)
+            return Result.Failure("Formalização inválida");
+        if (EstaFormalizada())
+            return Result.Failure("Averbação formalizada");
+
+        Formalizacao = formalizacao;
+        Status = Status.Formalizada;
+        
+        return Result.Success();
+    }
+
+    public bool EstaFormalizada() => Formalizacao != null;
 }
+
+public record Formalizacao(int CodigoIntegracao, DateTime Data, string Detalhes);
 
 public record Status
 {
@@ -53,8 +71,8 @@ public record Status
     public static Status Criada
         => new Status("CRIADA");
     
-    public static Status Processada
-        => new Status("PROCESSADA");
+    public static Status Formalizada
+        => new Status("FORMALIZADA");
     
     public static Status Cancelada
         => new Status("CANCELADA");

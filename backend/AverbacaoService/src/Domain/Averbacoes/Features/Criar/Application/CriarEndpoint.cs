@@ -42,8 +42,7 @@ public class CriarEndpoint(ILogger<CriarEndpoint> logger, CriarCommandHandler ha
         }
         
         logger.LogInformation("Averbacao criada com sucesso: {@0}", averbacao.Value);
-        var viewModel = new { averbacao.Value.Id, averbacao.Value.Status.Label, CodigoProposta = averbacao.Value.Proposta.Codigo }; 
-        await SendResultAsync(httpResponseFactory.CreateSuccess200($"Averbacao criada com sucesso: {viewModel}"));
+        await SendResultAsync(httpResponseFactory.CreateSuccess200(averbacao.Value));
     }
 }
 

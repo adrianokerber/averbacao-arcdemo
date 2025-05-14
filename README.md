@@ -21,14 +21,20 @@ docker compose -f backend/docker-compose.yaml up -d --no-deps averbacao-service-
 ## Migrations
 
 ```bash
-# Create initial migration
+# 1. Create initial migration
 dotnet ef migrations add InitialCreate --output-dir Infrastructure/Migrations
 
-# Run the migrations on DB
+# 2. Run the migrations on DB
 dotnet ef database update
+
+# 3. IF NECESSARY - Drop the database (if it exists and you want to reset the migrations). Note that you will need to repeat the first two steps after this
+dotnet ef database drop --force
 ```
 
 ## Tasks
 
 - Corrigir testes unitários
+- Adicionar StatePattern na averbacao
 - Adicionar Workflow.Core no AverbacaoWorkflowService
+- Rever real necessidade da interface IAverbacoesRepository pois ela foi inclusa inicialmente pela necessidade nos testes unitários, porém os testes de integração já fazem o teste do repositório
+- Implementar feature de cancelamento similar a implementação da formalização

@@ -36,8 +36,4 @@
         <ProjectReference Include="..\src\AverbacaoService.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Unit\DomainTest\Averbacoes\" />
-    </ItemGroup>
-
 </Project>

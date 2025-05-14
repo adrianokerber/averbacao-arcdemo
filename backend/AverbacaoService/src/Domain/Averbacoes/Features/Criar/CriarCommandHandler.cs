@@ -7,7 +7,7 @@ public class CriarCommandHandler(AverbacoesRepository averbacoesRepository) : IS
 {
     public async Task<Result<Averbacao>> HandleAsync(CriarCommand command, CancellationToken ct = default)
     {
-        var averbacao = await averbacoesRepository.ObterPorProposta(command.Proposta.Codigo);
+        var averbacao = await averbacoesRepository.ObterPorPropostaAsync(command.Proposta.Codigo);
         if (averbacao.HasValue)
             return Result.Failure<Averbacao>("Averbação já existe");
         

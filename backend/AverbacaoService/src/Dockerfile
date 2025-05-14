@@ -1,19 +1,21 @@
-﻿FROM mcr.microsoft.com/dotnet/runtime:8.0 AS base
+﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER $APP_UID
 WORKDIR /app
+EXPOSE 80
+EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["AverbacaoService/src/AverbacaoService.csproj", "AverbacaoService/src/"]
-RUN dotnet restore "AverbacaoService/src/AverbacaoService.csproj"
+COPY ["AverbacaoService.csproj", "src/"]
+RUN dotnet restore "src/AverbacaoService.csproj"
+WORKDIR "src/"
 COPY . .
-WORKDIR "/src/AverbacaoService/src"
-RUN dotnet build "./AverbacaoService.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "AverbacaoService.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./AverbacaoService.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "AverbacaoService.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

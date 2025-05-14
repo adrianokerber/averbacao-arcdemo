@@ -45,7 +45,7 @@ public class Program
             app.UseFastEndpoints();
             app.UseExceptionHandler();
 
-            if (app.Environment.IsDevelopment())
+            if (app.Environment.IsDevelopment() || app.Environment.IsStaging())
             {
                 // Add OpenAPI 3.0 document serving middleware
                 // Available at: http://localhost:<port>/swagger/v1/swagger.json

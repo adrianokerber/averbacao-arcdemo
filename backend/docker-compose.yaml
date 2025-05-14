@@ -3,16 +3,19 @@
     container_name: averbacao-service
     image: averbacao-service
     build:
-      context: .
-      dockerfile: AverbacaoService/src/Dockerfile
+      context: ./AverbacaoService/src
+      dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "8081:80"
     environment:
-      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_ENVIRONMENT: Staging
+      ASPNETCORE_URLS: http://+:80
     networks:
       - averbacao-network
+    depends_on:
+      - averbacao-sqlserver
       
-  averbacao-service-database:
+  averbacao-sqlserver:
     container_name: averbacao-db
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
@@ -20,17 +23,24 @@
       SA_PASSWORD: D3vP@ss!
     ports:
       - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
     networks:
       - averbacao-network
   
-  averbacao-workflow-service:
-    container_name: averbacao-workflow
-    image: averbacao-workflow-service
-    build:
-      context: .
-      dockerfile: AverbacaoWorkflowService/src/Dockerfile
-    networks:
-      - averbacao-network
+  # averbacao-workflow-service:
+  #   container_name: averbacao-workflow
+  #   image: averbacao-workflow-service
+  #   build:
+  #     context: ./AverbacaoWorkflowService/src
+  #     dockerfile: Dockerfile
+  #   networks:
+  #     - averbacao-network
+  #   depends_on:
+  #     - averbacao-service
+
+volumes:
+  sqlserver_data:
 
 networks:
   averbacao-network:

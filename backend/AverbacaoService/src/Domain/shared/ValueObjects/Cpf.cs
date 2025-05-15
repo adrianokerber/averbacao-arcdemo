@@ -1,6 +1,6 @@
 using CSharpFunctionalExtensions;
 
-namespace AverbacaoService.shared.ValueObjects;
+namespace AverbacaoService.Domain.shared.ValueObjects;
 
 public record Cpf
 {

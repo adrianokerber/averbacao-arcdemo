@@ -1,6 +1,5 @@
+using AverbacaoService.Infrastructure.EfContextConfiguration;
 using AverbacaoService.shared;
-using AverbacaoService.shared.DatabaseDetails;
-using AverbacaoService.shared.DatabaseDetails.Interfaces;
 using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;

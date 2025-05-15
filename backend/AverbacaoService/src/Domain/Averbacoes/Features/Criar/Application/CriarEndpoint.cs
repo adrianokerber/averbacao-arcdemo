@@ -1,5 +1,5 @@
+using AverbacaoService.Domain.shared.ValueObjects;
 using AverbacaoService.shared;
-using AverbacaoService.shared.ValueObjects;
 using FastEndpoints;
 using Microsoft.Extensions.Logging;
 
@@ -21,11 +21,18 @@ public class CriarEndpoint(ILogger<CriarEndpoint> logger, CriarCommandHandler ha
             await SendResultAsync(httpResponseFactory.CreateError400("Invalid message. Cannot process.", cpf.Error));
             return;
         }
+
+        var convenio = Convenio.Criar(req.Convenio);
+        if (convenio.IsFailure)
+        {
+            await SendResultAsync(httpResponseFactory.CreateError400("Invalid message. Cannot process.", "Convênio inexistente! Revise a gramática, ele precisa estar todo em maiúsculo."));
+            return;
+        }
         
         var proponente = new Proponente(cpf.Value, req.Proponente.Nome, req.Proponente.Sobrenome,
             req.Proponente.DataNascimento);
         var prazo = new Prazo(req.PrazoEmMeses);
-        var proposta = new Proposta(req.Codigo, proponente, req.Valor, prazo);
+        var proposta = new Proposta(req.Codigo, convenio.Value, proponente, req.Valor, prazo);
         
         var command = CriarCommand.Criar(proposta);
         if (command.IsFailure)
@@ -46,5 +53,5 @@ public class CriarEndpoint(ILogger<CriarEndpoint> logger, CriarCommandHandler ha
     }
 }
 
-public record CriarAverbacaoRequest(int Codigo, ProponenteDto Proponente, decimal Valor, int PrazoEmMeses);
+public record CriarAverbacaoRequest(int Codigo, string Convenio, ProponenteDto Proponente, decimal Valor, int PrazoEmMeses);
 public record ProponenteDto(string Cpf, string Nome, string Sobrenome, DateTime DataNascimento);

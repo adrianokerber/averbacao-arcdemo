@@ -1,4 +1,4 @@
-﻿namespace AverbacaoService.shared.DatabaseDetails.Interfaces
+﻿namespace AverbacaoService.Infrastructure.EfContextConfiguration.Interfaces
 {
     [Obsolete]
     public interface IUnitOfWork

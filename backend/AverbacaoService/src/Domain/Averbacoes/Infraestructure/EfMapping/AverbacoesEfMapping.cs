@@ -1,4 +1,4 @@
-using AverbacaoService.shared.ValueObjects;
+using AverbacaoService.Domain.shared.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -42,6 +42,14 @@ public class AverbacoesEfMapping : IEntityTypeConfiguration<Averbacao>
             proposta.Property(x => x.Codigo)
                     .IsRequired()
                     .HasColumnType("VARCHAR(15)");
+            
+            proposta.Property(x => x.Convenio)
+                .IsRequired()
+                .HasColumnName("Convenio")
+                .HasConversion(
+                    v => v.Nome,
+                    v => Convenio.Criar(v).Value
+                );
             
             proposta.Property(x => x.Valor)
                 .IsRequired()

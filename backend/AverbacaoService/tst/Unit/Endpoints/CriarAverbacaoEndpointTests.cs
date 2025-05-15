@@ -1,9 +1,8 @@
 using AverbacaoService.Domain.Averbacoes;
 using AverbacaoService.Domain.Averbacoes.Features.Criar;
 using AverbacaoService.Domain.Averbacoes.Features.Criar.Application;
+using AverbacaoService.Domain.shared.ValueObjects;
 using AverbacaoService.shared;
-using AverbacaoService.shared.DatabaseDetails;
-using AverbacaoService.shared.ValueObjects;
 using CSharpFunctionalExtensions;
 using FastEndpoints;
 using FluentAssertions;
@@ -35,6 +34,7 @@ public class CriarAverbacaoEndpointTests
         // Arrange
         var request = new CriarAverbacaoRequest(
             12345,
+            "INSS",
             new ProponenteDto("12345678900", "João", "Silva", new DateTime(1980, 1, 1)),
             50000.00m,
             36
@@ -42,6 +42,7 @@ public class CriarAverbacaoEndpointTests
 
         var expectedAverbacao = Averbacao.Criar(new Proposta(
             request.Codigo,
+            Convenio.Inss,
             new Proponente(Cpf.Criar(request.Proponente.Cpf).Value, request.Proponente.Nome, request.Proponente.Sobrenome, request.Proponente.DataNascimento),
             request.Valor,
             new Prazo(request.PrazoEmMeses)
@@ -82,6 +83,7 @@ public class CriarAverbacaoEndpointTests
         // Arrange
         var request = new CriarAverbacaoRequest(
             12345,
+            "INSS",
             new ProponenteDto(cpf, "João", "Silva", new DateTime(1980, 1, 1)),
             50000.00m,
             36

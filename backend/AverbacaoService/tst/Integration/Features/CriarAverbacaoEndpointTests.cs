@@ -27,6 +27,7 @@ public class CriarAverbacaoEndpointTests : IClassFixture<CustomWebApplicationFac
         // Arrange
         var request = new CriarAverbacaoRequest(
             98000,
+            "INSS",
             new ProponenteDto("11111111111", "Joana", "Silva", new DateTime(1980, 1, 1)),
             50000.00m,
             36
@@ -49,6 +50,7 @@ public class CriarAverbacaoEndpointTests : IClassFixture<CustomWebApplicationFac
         // Arrange
         var request = new CriarAverbacaoRequest(
             98001,
+            "INSS",
             new ProponenteDto(cpf, "João", "Silva", new DateTime(1980, 1, 1)),
             50000.00m,
             36

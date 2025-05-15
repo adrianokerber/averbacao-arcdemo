@@ -1,7 +1,7 @@
-﻿using AverbacaoService.shared.DatabaseDetails.Interfaces;
+﻿using AverbacaoService.Infrastructure.EfContextConfiguration.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace AverbacaoService.shared.DatabaseDetails
+namespace AverbacaoService.Infrastructure.EfContextConfiguration
 {
     [Obsolete]
     public sealed class AverbacaoDbContextFactory(IConfiguration configuration) : IEfDbContextFactory<AverbacaoDbContext>

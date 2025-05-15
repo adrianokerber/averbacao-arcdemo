@@ -1,6 +1,6 @@
-﻿using AverbacaoService.shared.DatabaseDetails.Interfaces;
+﻿using AverbacaoService.Infrastructure.EfContextConfiguration.Interfaces;
 
-namespace AverbacaoService.shared.DatabaseDetails
+namespace AverbacaoService.Infrastructure.EfContextConfiguration
 {
     [Obsolete]
     public sealed class AverbacaoDbContextAccessor: IEfDbContextAccessor<AverbacaoDbContext>

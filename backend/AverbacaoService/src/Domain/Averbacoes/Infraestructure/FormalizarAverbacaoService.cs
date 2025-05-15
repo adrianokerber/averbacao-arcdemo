@@ -1,5 +1,5 @@
+using AverbacaoService.Domain.shared.ValueObjects;
 using AverbacaoService.shared;
-using AverbacaoService.shared.ValueObjects;
 using CSharpFunctionalExtensions;
 using Flurl.Http;
 

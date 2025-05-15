@@ -1,9 +1,8 @@
 ﻿using Autofac;
 using AverbacaoService.Domain.Averbacoes;
 using AverbacaoService.Domain.Averbacoes.Features.Criar;
+using AverbacaoService.Infrastructure.EfContextConfiguration;
 using AverbacaoService.shared;
-using AverbacaoService.shared.DatabaseDetails;
-using AverbacaoService.shared.DatabaseDetails.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 

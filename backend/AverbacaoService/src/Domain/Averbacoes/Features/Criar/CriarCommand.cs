@@ -1,4 +1,4 @@
-using AverbacaoService.shared.ValueObjects;
+using AverbacaoService.Domain.shared.ValueObjects;
 using CSharpFunctionalExtensions;
 
 namespace AverbacaoService.Domain.Averbacoes.Features.Criar;

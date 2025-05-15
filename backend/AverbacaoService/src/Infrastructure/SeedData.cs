@@ -1,6 +1,6 @@
 using AverbacaoService.Domain.Averbacoes;
-using AverbacaoService.shared.DatabaseDetails;
-using AverbacaoService.shared.ValueObjects;
+using AverbacaoService.Domain.shared.ValueObjects;
+using AverbacaoService.Infrastructure.EfContextConfiguration;
 using CSharpFunctionalExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +26,7 @@ public static class SeedData
         {
             CreateAverbacao(
                 codigoProposta: 12345,
+                convenio: Convenio.Inss,
                 cpf: "12345678900",
                 nome: "João",
                 sobrenome: "Silva",
@@ -35,6 +36,7 @@ public static class SeedData
             ),
             CreateAverbacao(
                 codigoProposta: 12346,
+                convenio: Convenio.Inss,
                 cpf: "98765432100",
                 nome: "Maria",
                 sobrenome: "Santos",
@@ -44,6 +46,7 @@ public static class SeedData
             ),
             CreateAverbacao(
                 codigoProposta: 12347,
+                convenio: Convenio.Inss,
                 cpf: "45678912300",
                 nome: "Pedro",
                 sobrenome: "Oliveira",
@@ -59,6 +62,7 @@ public static class SeedData
 
     private static Result<Averbacao> CreateAverbacao(
         int codigoProposta,
+        Convenio convenio,
         string cpf,
         string nome,
         string sobrenome,
@@ -69,7 +73,7 @@ public static class SeedData
         var cpfObj = Cpf.Criar(cpf).Value;
         var proponente = new Proponente(cpfObj, nome, sobrenome, dataNascimento);
         var prazo = new Prazo(prazoMeses);
-        var proposta = new Proposta(codigoProposta, proponente, valor, prazo);
+        var proposta = new Proposta(codigoProposta, convenio, proponente, valor, prazo);
         
         return Averbacao.Criar(proposta);
     }

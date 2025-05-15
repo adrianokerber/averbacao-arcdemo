@@ -22,6 +22,7 @@ namespace AverbacaoService.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Proposta_Codigo = table.Column<string>(type: "VARCHAR(15)", nullable: false),
+                    Convenio = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Proposta_Proponente_Cpf = table.Column<string>(type: "VARCHAR(15)", nullable: false),
                     Proposta_Proponente_Nome = table.Column<string>(type: "VARCHAR(100)", nullable: false),
                     Proposta_Proponente_Sobrenome = table.Column<string>(type: "VARCHAR(100)", nullable: false),

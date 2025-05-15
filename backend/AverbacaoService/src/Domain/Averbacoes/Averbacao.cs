@@ -1,4 +1,4 @@
-using AverbacaoService.shared.ValueObjects;
+using AverbacaoService.Domain.shared.ValueObjects;
 using AverbacaoService.shared.Extensions;
 using CSharpFunctionalExtensions;
 
@@ -26,6 +26,8 @@ public class Averbacao {
             return Result.Failure<Averbacao>("Proposta não informada para criar averbação");
         if (proposta.Codigo <= 0)
             return Result.Failure<Averbacao>("Código da proposta inválido");
+        if (proposta.Convenio == null)
+            return Result.Failure<Averbacao>("Convênio não informado");
         if (proposta.Proponente == null)
             return Result.Failure<Averbacao>("Proponente não informado para criar averbação");
         if (proposta.Proponente.Nome.IsNullOrEmpty() || proposta.Proponente.Sobrenome.IsNullOrEmpty())

@@ -38,7 +38,7 @@ public class CriarAverbacaoEndpointTests : IClassFixture<CustomWebApplicationFac
 
         // Assert
         var content = await response.Content.ReadAsStringAsync();
-        content.Should().Contain("Averbacao criada com sucesso");
+        content.Should().Contain("\"status\":{\"label\":\"CRIADA\"},\"proposta\":{\"codigo\":98000,\"convenio\":{\"nome\":\"INSS\"}");
         response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 

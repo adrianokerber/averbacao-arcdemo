@@ -35,8 +35,7 @@ dotnet ef database drop --force
 
 ## Tasks
 
-- Corrigir testes unitários
-- Adicionar StatePattern na averbacao
-- Adicionar Workflow.Core no AverbacaoWorkflowService
+- Adicionar Kafka no docker-compose e testar AverbacaoWorkflow
+- Adicionar StatePattern na Averbacao
 - Rever real necessidade da interface IAverbacoesRepository pois ela foi inclusa inicialmente pela necessidade nos testes unitários, porém os testes de integração já fazem o teste do repositório
 - Implementar feature de cancelamento similar a implementação da formalização

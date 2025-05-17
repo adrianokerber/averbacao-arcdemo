@@ -3,8 +3,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using AverbacaoWorkflowService.StartupInfra.Extensions;
 using AverbacaoWorkflowService.StartupInfra.Kafka;
+using AverbacaoWorkflowService.Workflow;
+using AverbacaoWorkflowService.Workflow.Inss;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
+using WorkflowCore.Interface;
 
 var serviceVersion = Environment.GetEnvironmentVariable("DD_VERSION") ??
                      Assembly.GetExecutingAssembly().GetName().Version?.ToString();
@@ -34,7 +37,15 @@ try
             .ValidateOnStart();
 
         services
-            .AddKafka(configuration);
+            .AddKafka(configuration)
+            .AddWorkflow(wo =>
+            {
+                wo.UseSqlServer(configuration.GetSection("Database:ConnectionString").Value, true, true);
+                wo.UseMaxConcurrentWorkflows(100);
+            })
+            .AddScoped<CriarAverbacaoStepAsync>()
+            .AddScoped<FormalizarAverbacaoStepAsync>()
+            .AddScoped<InformarSistemaLegadoStepAsync>();
     });
     
     var configuration = new ConfigurationBuilder()
@@ -44,9 +55,12 @@ try
 
     builder.AddSerilog(configuration);
 
-    var host = builder.Build();
+    var app = builder.Build();
+    
+    app.Services.GetRequiredService<IWorkflowHost>().RegisterWorkflow<InclusaoInssWorkflowDefinition, PropostaInssData>();
+    app.Services.GetRequiredService<IWorkflowHost>().Start();
 
-    host.Run();
+    app.Run();
 
     return 0;
 }

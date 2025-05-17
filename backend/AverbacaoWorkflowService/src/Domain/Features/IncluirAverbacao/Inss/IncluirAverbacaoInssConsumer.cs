@@ -1,28 +1,28 @@
 using AverbacaoWorkflowService.Domain.shared.Silverback;
+using AverbacaoWorkflowService.Workflow.Inss;
 using Flurl.Http;
 using Microsoft.Extensions.Logging;
+using WorkflowCore.Interface;
 
 namespace AverbacaoWorkflowService.Domain.Features.IncluirAverbacao.Inss;
 
-public class IncluirAverbacaoInssConsumer(ILogger<IncluirAverbacaoInssConsumer> logger)
+public class IncluirAverbacaoInssConsumer(IWorkflowHost workflowHost, ILogger<IncluirAverbacaoInssConsumer> logger)
 {
     public async Task OnMessageReceivedAsync(PropostaAverbacaoInssMessage averbacaoInssMessage)
     {
-        // TODO: adicionar Workflow.Core e trigger abaixo
-        // TODO: mover o conteúdo abaixo para um step do Workflow
-        try
+        var inclusaoInss = new PropostaInssData
         {
-            // TODO: url deve ser lida de configs/appsettings
-            await "http://averbacao-service/averbacoes/criar".PostJsonAsync(averbacaoInssMessage);
-            logger.LogInformation($"Averbação recebida com sucesso: {averbacaoInssMessage}");
-        }
-        catch (FlurlHttpException ex)
-        {
-            var err = await ex.GetResponseStringAsync();
-            logger.LogCritical($"Error returned from {ex.Call.Request.Url}: {err}");
-            
-            throw new ConsumerFatalException("Invalid message. Cannot process.");
-        }
+            Codigo = averbacaoInssMessage.Codigo,
+            Proponente = new ProponenteInssData {
+                Cpf = averbacaoInssMessage.Proponente.Cpf,
+                Nome = averbacaoInssMessage.Proponente.Nome,
+                Sobrenome = averbacaoInssMessage.Proponente.Sobrenome,
+                DataNascimento = averbacaoInssMessage.Proponente.DataNascimento
+            },
+            PrazoEmMeses = averbacaoInssMessage.PrazoEmMeses,
+            Valor = averbacaoInssMessage.Valor
+        };
+        await workflowHost.StartWorkflow("InclusaoInssWorkflowDefinition", inclusaoInss);
     }
 }
 

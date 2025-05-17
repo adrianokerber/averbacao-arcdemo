@@ -28,16 +28,16 @@
     networks:
       - averbacao-network
   
-  # averbacao-workflow-service:
-  #   container_name: averbacao-workflow
-  #   image: averbacao-workflow-service
-  #   build:
-  #     context: ./AverbacaoWorkflowService/src
-  #     dockerfile: Dockerfile
-  #   networks:
-  #     - averbacao-network
-  #   depends_on:
-  #     - averbacao-service
+   averbacao-workflow-service:
+     container_name: averbacao-workflow
+     image: averbacao-workflow-service
+     build:
+       context: ./AverbacaoWorkflowService/src
+       dockerfile: Dockerfile
+     networks:
+       - averbacao-network
+     depends_on:
+       - averbacao-service
 
 volumes:
   sqlserver_data:

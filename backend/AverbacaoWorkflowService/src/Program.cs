@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using AverbacaoWorkflowService.StartupInfra.Extensions;
 using AverbacaoWorkflowService.StartupInfra.Kafka;
-using AverbacaoWorkflowService.Workflow;
 using AverbacaoWorkflowService.Workflow.Inss;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
@@ -11,19 +10,18 @@ using WorkflowCore.Interface;
 
 var serviceVersion = Environment.GetEnvironmentVariable("DD_VERSION") ??
                      Assembly.GetExecutingAssembly().GetName().Version?.ToString();
-
-var assemblyName = Assembly.GetExecutingAssembly().GetName();
-var serviceName = assemblyName.Name;
+var appName = Assembly.GetExecutingAssembly().GetName().Name;
 try
 {
-    Console.WriteLine("Starting application");
-    Log.ForContext("ApplicationName", serviceName).Information("Starting application");
+    Log.ForContext("ApplicationName", appName).Information("Starting application");
 
     var builder = Host.CreateDefaultBuilder(args)
     .ConfigureAppConfiguration((hostingContext, config) =>
     {
-        config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-        config.AddEnvironmentVariables();
+        config.SetBasePath(Directory.GetCurrentDirectory())
+              .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+              .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+              .AddEnvironmentVariables();
     })
     .ConfigureServices((context, services) =>
     {
@@ -41,22 +39,16 @@ try
             .AddWorkflow(wo =>
             {
                 wo.UseSqlServer(configuration.GetSection("Database:ConnectionString").Value, true, true);
-                wo.UseMaxConcurrentWorkflows(100);
+                wo.UseMaxConcurrentWorkflows(10);
             })
             .AddScoped<CriarAverbacaoStepAsync>()
             .AddScoped<FormalizarAverbacaoStepAsync>()
             .AddScoped<InformarSistemaLegadoStepAsync>();
     });
     
-    var configuration = new ConfigurationBuilder()
-        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-        .AddEnvironmentVariables()
-        .Build();
-
-    builder.AddSerilog(configuration);
-
     var app = builder.Build();
-    
+    builder.AddSerilog(app.Services.GetRequiredService<IConfiguration>());
+
     app.Services.GetRequiredService<IWorkflowHost>().RegisterWorkflow<InclusaoInssWorkflowDefinition, PropostaInssData>();
     app.Services.GetRequiredService<IWorkflowHost>().Start();
 
@@ -69,7 +61,7 @@ catch (Exception ex)
     Console.WriteLine("Error when trying to start application {0}", ex);
     var errorContext = new
     {
-        ApplicationName = serviceName,
+        ApplicationName = appName,
         Version = serviceVersion,
         Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Unknown",
         PodName = Environment.GetEnvironmentVariable("HOSTNAME") ?? "Unknown",

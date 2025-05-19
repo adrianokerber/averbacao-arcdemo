@@ -13,9 +13,9 @@
     networks:
       - averbacao-network
     depends_on:
-      - averbacao-sqlserver
+      - sqlserver
       
-  averbacao-sqlserver:
+  sqlserver:
     container_name: averbacao-db
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment:
@@ -28,19 +28,49 @@
     networks:
       - averbacao-network
   
-   averbacao-workflow-service:
-     container_name: averbacao-workflow
-     image: averbacao-workflow-service
-     build:
-       context: ./AverbacaoWorkflowService/src
-       dockerfile: Dockerfile
-     networks:
-       - averbacao-network
-     depends_on:
-       - averbacao-service
+  averbacao-workflow-service:
+    container_name: averbacao-workflow
+    image: averbacao-workflow-service
+    build:
+      context: ./AverbacaoWorkflowService/src
+      dockerfile: Dockerfile
+    environment:
+      DOTNET_ENVIRONMENT: Development
+    networks:
+      - averbacao-network
+    depends_on:
+      - averbacao-service
+      - broker
+        
+  broker:
+    image: apache/kafka:latest
+    container_name: broker
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://broker:9092,CONTROLLER://broker:9093,EXTERNAL://broker:29092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:9092,EXTERNAL://localhost:29092
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@broker:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_NUM_PARTITIONS: 3
+      KAFKA_LOG_DIRS: /var/lib/kafka/data
+    ports:
+      - 9092:9092
+      - 29092:29092
+    volumes:
+      - kafka_data:/var/lib/kafka/data
+    networks:
+      - averbacao-network
+
 
 volumes:
   sqlserver_data:
+  kafka_data:
 
 networks:
   averbacao-network:

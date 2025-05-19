@@ -1,4 +1,5 @@
 using Flurl.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using WorkflowCore.Interface;
 using WorkflowCore.Models;
@@ -21,18 +22,19 @@ public class InclusaoInssWorkflowDefinition : IWorkflow<PropostaInssData>
     }
 }
 
-public class CriarAverbacaoStepAsync(ILogger<CriarAverbacaoStepAsync> logger) : StepBodyAsync
+public class CriarAverbacaoStepAsync(ILogger<CriarAverbacaoStepAsync> logger, IConfiguration configuration) : StepBodyAsync
 {
     public PropostaInssData IntencaoProposta { get; set; } 
     
     public override async Task<ExecutionResult> RunAsync(IStepExecutionContext context)
     {
+        var averbacaoService = configuration.GetSection("AverbacaoServiceUri").Value!;
         logger.LogInformation("Chama micro-serviço AverbacaoService POST:averbacoes/criar");
         
         try
         {
             // TODO: url deve ser lida de configs/appsettings
-            await "http://averbacao-service/averbacoes/criar".PostJsonAsync(IntencaoProposta);
+            await $"{averbacaoService}/averbacoes/criar".PostJsonAsync(IntencaoProposta);
             logger.LogInformation("Averbação recebida com sucesso: {@0}", IntencaoProposta);
         }
         catch (FlurlHttpException ex)
@@ -47,18 +49,19 @@ public class CriarAverbacaoStepAsync(ILogger<CriarAverbacaoStepAsync> logger) : 
     }
 }
 
-public class FormalizarAverbacaoStepAsync(ILogger<FormalizarAverbacaoStepAsync> logger) : StepBodyAsync
+public class FormalizarAverbacaoStepAsync(ILogger<FormalizarAverbacaoStepAsync> logger, IConfiguration configuration) : StepBodyAsync
 {
     public int Codigo { get; set; }
     
     public override async Task<ExecutionResult> RunAsync(IStepExecutionContext context)
     {
+        var averbacaoService = configuration.GetSection("AverbacaoServiceUri").Value!;
         logger.LogInformation("Chama micro-serviço AverbacaoService POST:averbacoes/formalizar");
         
         try
         {
             // TODO: url deve ser lida de configs/appsettings
-            await "http://averbacao-service/averbacoes/formalizar".PostJsonAsync(Codigo);
+            await $"{averbacaoService}/averbacoes/formalizar".PostJsonAsync(Codigo);
             logger.LogInformation("Averbação recebida com sucesso: {@0}", Codigo);
         }
         catch (FlurlHttpException ex)
@@ -85,6 +88,7 @@ public class InformarSistemaLegadoStepAsync(ILogger<InformarSistemaLegadoStepAsy
 public class PropostaInssData
 {
     public int Codigo { get; set; }
+    public string Convenio { get; set; }
     public ProponenteInssData Proponente { get; set; }
     public decimal Valor { get; set; }
     public int PrazoEmMeses { get; set; }

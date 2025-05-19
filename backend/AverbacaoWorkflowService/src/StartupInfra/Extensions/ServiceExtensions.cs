@@ -45,25 +45,7 @@ internal static class ServicesExtensions
                 .Enrich.WithProperty("ApplicationName", $"{applicationName}")
                 .Enrich.FromLogContext()
                 .Enrich.WithMachineName()
-                .MinimumLevel.Is(BuscarNivelLog(configuration))
-                .MinimumLevel.ControlledBy(new LoggingLevelSwitch(BuscarNivelLog(configuration)))
                 .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj}{NewLine}{Exception}");
         });
-    }
-
-    private static LogEventLevel BuscarNivelLog(IConfiguration configuration)
-    {
-        var nivel = configuration["ElasticConfiguration:MinimumLevel"]?.ToUpper();
-
-        return nivel switch
-        {
-            "VERBOSE" => LogEventLevel.Verbose,
-            "DEBUG" => LogEventLevel.Debug,
-            "INFORMATION" => LogEventLevel.Information,
-            "WARNING" => LogEventLevel.Warning,
-            "ERROR" => LogEventLevel.Error,
-            "FATAL" => LogEventLevel.Fatal,
-            _ => LogEventLevel.Information,
-        };
     }
 }

@@ -13,6 +13,7 @@ public class IncluirAverbacaoInssConsumer(IWorkflowHost workflowHost, ILogger<In
         var inclusaoInss = new PropostaInssData
         {
             Codigo = averbacaoInssMessage.Codigo,
+            Convenio = "INSS",
             Proponente = new ProponenteInssData {
                 Cpf = averbacaoInssMessage.Proponente.Cpf,
                 Nome = averbacaoInssMessage.Proponente.Nome,

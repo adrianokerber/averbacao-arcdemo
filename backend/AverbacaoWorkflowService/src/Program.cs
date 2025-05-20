@@ -49,7 +49,7 @@ try
     var app = builder.Build();
     builder.AddSerilog(app.Services.GetRequiredService<IConfiguration>());
 
-    app.Services.GetRequiredService<IWorkflowHost>().RegisterWorkflow<InclusaoInssWorkflowDefinition, PropostaInssData>();
+    app.Services.GetRequiredService<IWorkflowHost>().RegisterWorkflow<InclusaoInssWorkflowDefinition, InssWorkflowData>();
     app.Services.GetRequiredService<IWorkflowHost>().Start();
 
     app.Run();

@@ -41,7 +41,6 @@
         <Folder Include="Entrypoints\Features\IncluirAverbacao\Fgts\" />
         <Folder Include="Entrypoints\Features\IncluirAverbacao\Siape\" />
         <Folder Include="Workflow\Fgts\" />
-        <Folder Include="Workflow\Inss\Steps\" />
         <Folder Include="Workflow\Siape\" />
     </ItemGroup>
 

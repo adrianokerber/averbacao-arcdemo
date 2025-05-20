@@ -38,8 +38,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Domain\Features\IncluirAverbacao\Fgts\" />
-        <Folder Include="Domain\Features\IncluirAverbacao\Siape\" />
+        <Folder Include="Entrypoints\Features\IncluirAverbacao\Fgts\" />
+        <Folder Include="Entrypoints\Features\IncluirAverbacao\Siape\" />
         <Folder Include="Workflow\Fgts\" />
         <Folder Include="Workflow\Inss\Steps\" />
         <Folder Include="Workflow\Siape\" />

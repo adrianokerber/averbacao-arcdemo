@@ -1,3 +1,3 @@
-namespace AverbacaoWorkflowService.Domain.shared.Silverback;
+namespace AverbacaoWorkflowService.Entrypoints.shared.Silverback;
 
 public class ConsumerFatalException(string message) : Exception(message);

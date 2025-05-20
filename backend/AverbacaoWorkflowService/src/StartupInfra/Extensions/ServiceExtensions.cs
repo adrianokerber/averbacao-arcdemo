@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using AverbacaoWorkflowService.Domain.Features.IncluirAverbacao.Inss;
+using AverbacaoWorkflowService.Entrypoints.Features.IncluirAverbacao.Inss;
 using AverbacaoWorkflowService.StartupInfra.Kafka;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

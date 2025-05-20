@@ -1,4 +1,4 @@
-using AverbacaoWorkflowService.Domain.Features.IncluirAverbacao.Inss;
+using AverbacaoWorkflowService.Entrypoints.Features.IncluirAverbacao.Inss;
 
 namespace AverbacaoWorkflowService.StartupInfra.Kafka;
 

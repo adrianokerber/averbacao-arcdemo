@@ -1,10 +1,8 @@
-using AverbacaoWorkflowService.Domain.shared.Silverback;
 using AverbacaoWorkflowService.Workflow.Inss;
-using Flurl.Http;
 using Microsoft.Extensions.Logging;
 using WorkflowCore.Interface;
 
-namespace AverbacaoWorkflowService.Domain.Features.IncluirAverbacao.Inss;
+namespace AverbacaoWorkflowService.Entrypoints.Features.IncluirAverbacao.Inss;
 
 public class IncluirAverbacaoInssConsumer(IWorkflowHost workflowHost, ILogger<IncluirAverbacaoInssConsumer> logger)
 {

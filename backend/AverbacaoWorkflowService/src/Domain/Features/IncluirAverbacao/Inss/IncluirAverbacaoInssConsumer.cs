@@ -23,7 +23,7 @@ public class IncluirAverbacaoInssConsumer(IWorkflowHost workflowHost, ILogger<In
             PrazoEmMeses = averbacaoInssMessage.PrazoEmMeses,
             Valor = averbacaoInssMessage.Valor
         };
-        await workflowHost.StartWorkflow("InclusaoInssWorkflowDefinition", inclusaoInss);
+        await workflowHost.StartWorkflow("InclusaoInssWorkflowDefinition", new InssWorkflowData{ Proposta = inclusaoInss });
     }
 }
 

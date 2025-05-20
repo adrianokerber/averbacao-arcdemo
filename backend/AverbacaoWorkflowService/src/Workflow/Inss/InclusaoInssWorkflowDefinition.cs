@@ -71,8 +71,8 @@ public class FormalizarAverbacaoStepAsync(ILogger<FormalizarAverbacaoStepAsync> 
         
         try
         {
-            await $"{averbacaoService}/averbacoes/formalizar".PostJsonAsync(Codigo);
-            logger.LogInformation("Averbação recebida com sucesso: {@0}", Codigo);
+            await $"{averbacaoService}/averbacoes/formalizar".PostJsonAsync(new { codigoProposta=Codigo });
+            logger.LogInformation("Averbação formalizada com sucesso: {@0}", Codigo);
         }
         catch (FlurlHttpException ex)
         {

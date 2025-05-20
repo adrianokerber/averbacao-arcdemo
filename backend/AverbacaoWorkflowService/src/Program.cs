@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using AverbacaoWorkflowService.StartupInfra.Extensions;
 using AverbacaoWorkflowService.StartupInfra.Kafka;
 using AverbacaoWorkflowService.Workflow.Inss;
+using AverbacaoWorkflowService.Workflow.Inss.Steps;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using WorkflowCore.Interface;
@@ -41,6 +42,7 @@ try
                 wo.UseSqlServer(configuration.GetSection("Database:ConnectionString").Value, true, true);
                 wo.UseMaxConcurrentWorkflows(10);
             })
+            .AddScoped<HandleInvalidRequestStepAsync>()
             .AddScoped<CriarAverbacaoStepAsync>()
             .AddScoped<FormalizarAverbacaoStepAsync>()
             .AddScoped<InformarSistemaLegadoStepAsync>();

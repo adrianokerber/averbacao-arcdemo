@@ -10,23 +10,29 @@ public class InclusaoInssWorkflowDefinition : IWorkflow<InssWorkflowData>
     public int Version => 1;
 
     public void Build(IWorkflowBuilder<InssWorkflowData> builder)
-    {    
+    {
+        var fluxoComunicarErros = builder
+            .CreateBranch()
+            .StartWith<EnviarEventoErroStepAsync>();
+        
+        var fluxoPadrao = builder.CreateBranch()
+            .StartWith<FormalizarAverbacaoStepAsync>()
+                .Input(step => step.Codigo, data => data.Proposta.Codigo)
+                .Output(data => data.StepResultBehaviour, step => step.StepResultBehaviour)
+            .Decide(data => data.StepResultBehaviour)
+                .When(WorkflowErrorHandling.Terminate)
+                    .Then<EnviarEventoErroStepAsync>()
+                .When(WorkflowErrorHandling.Retry)
+                    .Then<InformarSistemaLegadoStepAsync>();
+
+
         builder
             .StartWith<CriarAverbacaoStepAsync>()
                 .Input(step => step.IntencaoProposta, data => data.Proposta)
                 .Output(data => data.StepResultBehaviour, step => step.StepResultBehaviour)
             .Decide(data => data.StepResultBehaviour)
-                .When(WorkflowErrorHandling.Terminate)
-                    .Then<HandleInvalidRequestStepAsync>()
-                .When(WorkflowErrorHandling.Retry) // NOTE: this is equivalent here to a CONTINUE. We must later change the control flow operator for another type - maybe a record structured like a enum  
-                    .Then<FormalizarAverbacaoStepAsync>()
-                        .Input(step => step.Codigo, data => data.Proposta.Codigo)
-                        .Output(data => data.StepResultBehaviour, step => step.StepResultBehaviour)
-                    .Decide(data => data.StepResultBehaviour)
-                        .When(WorkflowErrorHandling.Terminate)
-                            .Then<HandleInvalidRequestStepAsync>()
-                        .When(WorkflowErrorHandling.Retry)
-                            .Then<InformarSistemaLegadoStepAsync>();
+                .Branch((data, outcome) => data.StepResultBehaviour == WorkflowErrorHandling.Terminate, fluxoComunicarErros)
+                .Branch((data, outcome) => data.StepResultBehaviour == WorkflowErrorHandling.Retry, fluxoPadrao); // NOTE: this is equivalent here to a CONTINUE. We must later change the control flow operator for another type - maybe a record structured like a enum
     }
 }
 

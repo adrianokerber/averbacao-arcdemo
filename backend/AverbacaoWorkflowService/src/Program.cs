@@ -42,7 +42,7 @@ try
                 wo.UseSqlServer(configuration.GetSection("Database:ConnectionString").Value, true, true);
                 wo.UseMaxConcurrentWorkflows(10);
             })
-            .AddScoped<HandleInvalidRequestStepAsync>()
+            .AddScoped<EnviarEventoErroStepAsync>()
             .AddScoped<CriarAverbacaoStepAsync>()
             .AddScoped<FormalizarAverbacaoStepAsync>()
             .AddScoped<InformarSistemaLegadoStepAsync>();

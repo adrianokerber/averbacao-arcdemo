@@ -55,9 +55,7 @@ Para o convênio INSS insira a mensagem abaixo no tópico:
 ## Tasks
 
 - Adicionar Polly no Flurl
-- Adicionar etapa de validação após etapa de criação
-- 
-- Adicionar etapa de notificar em tópico Kafka erro para processar alguma determinada mensagem que entrou no Workflow.
-- Adicionar StatePattern na Averbacao
+- Estuturar strategy pattern na AverbacaoService de forma a separar o comportamento das conveniadas?
+- Adicionar StatePattern na Averbacao?
 - Rever real necessidade da interface IAverbacoesRepository pois ela foi inclusa inicialmente pela necessidade nos testes unitários, porém os testes de integração já fazem o teste do repositório
 - Implementar feature de cancelamento similar a implementação da formalização

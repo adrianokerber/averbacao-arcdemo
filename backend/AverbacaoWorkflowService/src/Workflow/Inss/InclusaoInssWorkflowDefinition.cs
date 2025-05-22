@@ -1,6 +1,6 @@
 using AverbacaoWorkflowService.Workflow.Inss.Steps;
+using AverbacaoWorkflowService.Workflow.shared;
 using WorkflowCore.Interface;
-using WorkflowCore.Models;
 
 namespace AverbacaoWorkflowService.Workflow.Inss;
 
@@ -11,35 +11,26 @@ public class InclusaoInssWorkflowDefinition : IWorkflow<InssWorkflowData>
 
     public void Build(IWorkflowBuilder<InssWorkflowData> builder)
     {
-        var fluxoComunicarErros = builder
-            .CreateBranch()
-            .StartWith<EnviarEventoErroStepAsync>();
-        
-        var fluxoPadrao = builder.CreateBranch()
-            .StartWith<FormalizarAverbacaoStepAsync>()
-                .Input(step => step.Codigo, data => data.Proposta.Codigo)
-                .Output(data => data.StepResultBehaviour, step => step.StepResultBehaviour)
-            .Decide(data => data.StepResultBehaviour)
-                .When(WorkflowErrorHandling.Terminate)
-                    .Then<EnviarEventoErroStepAsync>()
-                .When(WorkflowErrorHandling.Retry)
-                    .Then<InformarSistemaLegadoStepAsync>();
-
-
+        // Inicia o fluxo do workflow
         builder
             .StartWith<CriarAverbacaoStepAsync>()
                 .Input(step => step.IntencaoProposta, data => data.Proposta)
-                .Output(data => data.StepResultBehaviour, step => step.StepResultBehaviour)
-            .Decide(data => data.StepResultBehaviour)
-                .Branch((data, outcome) => data.StepResultBehaviour == WorkflowErrorHandling.Terminate, fluxoComunicarErros)
-                .Branch((data, outcome) => data.StepResultBehaviour == WorkflowErrorHandling.Retry, fluxoPadrao); // NOTE: this is equivalent here to a CONTINUE. We must later change the control flow operator for another type - maybe a record structured like a enum
+                .Output(data => data.FlowBehaviour, step => step.FlowBehaviour)
+            .If(data => data.FlowBehaviour == FlowBehaviour.Terminate)
+                .Do(then => then.StartWith<EnviarEventoErroStepAsync>().EndWorkflow())
+            .Then<FormalizarAverbacaoStepAsync>()
+                .Input(step => step.Codigo, data => data.Proposta.Codigo)
+                .Output(data => data.FlowBehaviour, step => step.FlowBehaviour)
+            .If(data => data.FlowBehaviour == FlowBehaviour.Terminate)
+                .Do(then => then.StartWith<EnviarEventoErroStepAsync>().EndWorkflow())
+            .Then<InformarSistemaLegadoStepAsync>();
     }
 }
 
 public class InssWorkflowData
 {
     public PropostaInssData Proposta { get; set; }
-    public WorkflowErrorHandling StepResultBehaviour { get; set; }
+    public FlowBehaviour FlowBehaviour { get; set; }
 }
 
 public class PropostaInssData

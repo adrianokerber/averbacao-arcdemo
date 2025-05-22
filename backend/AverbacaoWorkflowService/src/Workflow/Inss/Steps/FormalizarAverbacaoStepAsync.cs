@@ -1,3 +1,4 @@
+using AverbacaoWorkflowService.Workflow.shared;
 using Flurl.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -9,7 +10,7 @@ namespace AverbacaoWorkflowService.Workflow.Inss.Steps;
 public class FormalizarAverbacaoStepAsync(ILogger<FormalizarAverbacaoStepAsync> logger, IConfiguration configuration) : StepBodyAsync
 {
     public int Codigo { get; set; }
-    public WorkflowErrorHandling StepResultBehaviour { get; set; }
+    public FlowBehaviour FlowBehaviour { get; set; }
     
     public override async Task<ExecutionResult> RunAsync(IStepExecutionContext context)
     {
@@ -20,7 +21,7 @@ public class FormalizarAverbacaoStepAsync(ILogger<FormalizarAverbacaoStepAsync> 
         {
             await $"{averbacaoService}/averbacoes/formalizar".PostJsonAsync(new { codigoProposta = Codigo });
             logger.LogInformation("Averbação formalizada com sucesso: {@0}", Codigo);
-            StepResultBehaviour = WorkflowErrorHandling.Retry;
+            FlowBehaviour = FlowBehaviour.Continue;
         }
         catch (FlurlHttpException ex)
         {
@@ -30,7 +31,7 @@ public class FormalizarAverbacaoStepAsync(ILogger<FormalizarAverbacaoStepAsync> 
             if (ex.Call.Response?.StatusCode == 400)
             {
                 logger.LogError("Invalid request (400) - terminating workflow. Error: {Error}", err);
-                StepResultBehaviour = WorkflowErrorHandling.Terminate;
+                FlowBehaviour = FlowBehaviour.Terminate;
                 return ExecutionResult.Next();
             }
             

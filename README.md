@@ -35,9 +35,11 @@ dotnet ef database update
 dotnet ef database drop --force
 ```
 
-## Test Data
+## Running
 
-Para o convênio INSS insira a mensagem abaixo no tópico:
+1. Para executar um fluxo de teste para INSS basta você executar `docker compose -f backend/docker-compose.yaml up -d`.
+2. Usando qualquer Kafka cliente insira a mensagem abaixo no tópico `local.averbacao-service.incluir-averbacao`.
+Mensagem:
 ```json
 {
     "Codigo": 12345,
@@ -51,8 +53,11 @@ Para o convênio INSS insira a mensagem abaixo no tópico:
     "PrazoEmMeses": 30
 }
 ```
+> 💡 Você pode utilizar o [OffsetExplorer](https://www.kafkatool.com/) para enviar as mensagens Kafka.
 
-## Tasks
+> Se quiser rodar um teste de carga na aplicação execute o comando `k6 run backend/AverbacaoService/tst/k6-load-test.js`. Importante: você precisa estar com o [k6](k6.io/) instalado na sua máquina.
+
+## Roadmap
 
 - Adicionar Polly no Flurl
 - Estuturar strategy pattern na AverbacaoService de forma a separar o comportamento das conveniadas?
